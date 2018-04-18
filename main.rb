@@ -5,7 +5,6 @@ require "./lib/game"
 require "./lib/player"
 require 'securerandom'
 require 'sinatra/twitter-bootstrap'
-require 'haml'
 require "./lib/valid_items"
 
 use Rack::Session::Pool
@@ -30,7 +29,6 @@ end
 
 get '/game' do
   valid_items = Validitems.new(settings.items).call
-  game = Game.new(valid_items, @player1, @player2)
 
   player1_pick = session[:player1_pick]
   key = session[:secret]
