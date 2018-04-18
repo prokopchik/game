@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>My First View!!</title>
-    </head>
-    <body>
-      integrity hash: <%= @hmac_hash %>
-      <br>
-      result game:
-      <br>
-      <%= @winner_name %>
-      WIN
-      <br>
-      comp choose -
-      <%= @player1.pick %>;
-      you choose -
-      <%= @player2.pick %>
-
-      <a href="/">One more game</a>
-    </body>
-</html>
+<center>
+  <h1>Result game. Who has won?</h1>
+  <br>
+  <ins><h2><%= @winner_name %></h2></ins>
+  <br>
+  <h3>
+  comp choose -
+  <%= @player1.pick %>;
+  you choose -
+  <%= @player2.pick %>
+  </h3>
+  <br>
+  <br>
+  <%= @hmac_hash %> - your key for verification
+  <br>
+  <br>
+  <button><a href="/">One more game</a></button>
+</center>

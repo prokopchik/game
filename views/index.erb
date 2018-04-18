@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>My First View!!</title>
-    </head>
-    <body>
-      <%= @hmac_hash %>
-      <%- @items.each do |item| %>
-        <a href="/game?pick=<%= item %>"><%= item %></a>
-        <br>
-      <% end %>
-    </body>
-</html>
+<center>
+  <h1>Make a choice and the game will start:</h1>
+  <h2>
+    <%- @items.each do |item| %>
+      <a href="/game?pick=<%= item %>"><%= item %></a>
+    <% end %>
+  </h2>
+  <br>
+  <%= @hmac_hash %>  - your key for verification
+</center>
