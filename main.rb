@@ -6,11 +6,13 @@ require "./lib/player"
 require 'securerandom'
 require 'sinatra/twitter-bootstrap'
 require 'haml'
+require "./lib/valid_items"
 
 use Rack::Session::Pool
 config_file './config/items.yml'
 
 get '/' do
+  @items = Validitems.new(settings.items).call
   @items = settings.items
 
   player1_pick = @items.sample
@@ -19,7 +21,7 @@ get '/' do
   session[:player1_pick] = player1_pick
   session[:secret] = key
 
-  instance = OpenSSL::HMAC.hexdigest('SHA256', key, "spock")
+  instance = OpenSSL::HMAC.hexdigest('SHA256', key, "player1_pick")
   @hmac_hash = instance.to_s
 
   erb :index
@@ -27,11 +29,14 @@ end
 
 
 get '/game' do
+  valid_items = Validitems.new(settings.items).call
+  game = Game.new(valid_items, @player1, @player2)
+
   player1_pick = session[:player1_pick]
   key = session[:secret]
 
   digest = OpenSSL::Digest.new('sha256')
-  instance = OpenSSL::HMAC.hexdigest('SHA256', key, "spock")
+  instance = OpenSSL::HMAC.hexdigest('SHA256', key, "player1_pick")
   @hmac_hash = instance.to_s
 
   session[:player1_pick] = nil
